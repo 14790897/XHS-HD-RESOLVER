@@ -12,7 +12,7 @@ function App() {
           </div>
           <nav className="flex gap-4">
             <a 
-              href="https://github.com" 
+              href="https://github.com/14790897/XHS-HD-RESOLVER" 
               target="_blank" 
               rel="noreferrer" 
               className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
