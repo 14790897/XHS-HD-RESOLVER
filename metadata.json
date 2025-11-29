@@ -1,0 +1,5 @@
+{
+  "name": "XHS HD Resolver",
+  "description": "A specialized tool to resolve, uncompress, and download high-definition images from Xiaohongshu (Little Red Book) web links.",
+  "requestFramePermissions": []
+}
