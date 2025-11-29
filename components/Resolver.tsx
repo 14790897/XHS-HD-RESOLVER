@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  ArrowRight, 
-  Download, 
-  Image as ImageIcon, 
-  Link as LinkIcon, 
-  Copy, 
-  CheckCircle2, 
+import {
+  ArrowRight,
+  Download,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  Copy,
+  CheckCircle2,
   AlertCircle,
   Zap,
   History,
@@ -14,14 +14,22 @@ import {
 import { Button, Input, Switch, Card } from './ui';
 import { resolveXhsUrl, triggerDownload } from '../utils/xhsLogic';
 import { ResolutionResult, TEST_CASE_URL } from '../types';
+import { getBooleanCookie, setBooleanCookie } from '../utils/cookies';
+
+const AUTO_DOWNLOAD_COOKIE = 'xhs_auto_download';
 
 export const Resolver: React.FC = () => {
   const [inputUrl, setInputUrl] = useState('');
   const [result, setResult] = useState<ResolutionResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [autoDownload, setAutoDownload] = useState(true);
+  const [autoDownload, setAutoDownload] = useState(() => getBooleanCookie(AUTO_DOWNLOAD_COOKIE, true));
   const [history, setHistory] = useState<ResolutionResult[]>([]);
   const [copied, setCopied] = useState(false);
+
+  // Persist autoDownload state to cookie
+  useEffect(() => {
+    setBooleanCookie(AUTO_DOWNLOAD_COOKIE, autoDownload);
+  }, [autoDownload]);
 
   const handleResolve = useCallback(() => {
     setError(null);
