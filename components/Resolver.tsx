@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   Download,
@@ -19,6 +20,7 @@ import { getBooleanCookie, setBooleanCookie } from '../utils/cookies';
 const AUTO_DOWNLOAD_COOKIE = 'xhs_auto_download';
 
 export const Resolver: React.FC = () => {
+  const { t } = useTranslation();
   const [inputUrl, setInputUrl] = useState('');
   const [result, setResult] = useState<ResolutionResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -36,14 +38,14 @@ export const Resolver: React.FC = () => {
     setCopied(false);
     
     if (!inputUrl.trim()) {
-      setError("Please enter a link to resolve.");
+      setError(t('input.error.empty'));
       return;
     }
 
     const resolved = resolveXhsUrl(inputUrl);
 
     if (!resolved) {
-      setError("No valid Trace ID found (starting with 1040g). Please check the link.");
+      setError(t('input.error.invalid'));
       setResult(null);
       return;
     }
@@ -63,7 +65,7 @@ export const Resolver: React.FC = () => {
       return [newResult, ...filtered].slice(0, 10); // Keep last 10
     });
 
-  }, [inputUrl]);
+  }, [inputUrl, t]);
 
   // Auto download effect
   useEffect(() => {
@@ -103,11 +105,10 @@ export const Resolver: React.FC = () => {
           <Zap className="h-8 w-8 text-white" />
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-          XHS HD Resolver
+          {t('app.title')}
         </h1>
         <p className="mx-auto max-w-lg text-slate-500">
-          Extract high-quality, watermark-free PNGs from Xiaohongshu web links. 
-          Bypasses 403 errors automatically.
+          {t('app.subtitle')}
         </p>
       </div>
 
@@ -116,18 +117,18 @@ export const Resolver: React.FC = () => {
         <div className="space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <label className="text-sm font-semibold text-slate-700">Web Picture URL</label>
+              <label className="text-sm font-semibold text-slate-700">{t('input.label')}</label>
               <button 
                 onClick={() => setInputUrl(TEST_CASE_URL)}
                 className="text-xs font-medium text-xhs-brand hover:underline"
               >
-                Fill Test Case
+                {t('input.fillTestCase')}
               </button>
             </div>
             <Input 
               value={inputUrl}
               onChange={(e) => setInputUrl(e.target.value)}
-              placeholder="Paste link containing sns-webpic-qc.xhscdn.com..."
+              placeholder={t('input.placeholder')}
               className="font-mono text-sm"
               onKeyDown={(e) => e.key === 'Enter' && handleResolve()}
             />
@@ -143,16 +144,16 @@ export const Resolver: React.FC = () => {
             <Switch 
               checked={autoDownload} 
               onCheckedChange={setAutoDownload} 
-              label="Auto Download Image" 
+              label={t('input.autoDownload')}
             />
             <div className="flex gap-3 w-full sm:w-auto">
               {inputUrl && (
                 <Button variant="ghost" onClick={handleClear} className="flex-1 sm:flex-none">
-                  Clear
+                  {t('input.clear')}
                 </Button>
               )}
               <Button onClick={handleResolve} icon={ArrowRight} className="flex-1 sm:flex-none w-full sm:w-32 shadow-md shadow-red-100">
-                Resolve
+                {t('input.resolve')}
               </Button>
             </div>
           </div>
@@ -165,7 +166,7 @@ export const Resolver: React.FC = () => {
           <Card className="overflow-hidden">
             <div className="bg-slate-50 p-4 border-b border-slate-100 flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-500" />
-              <span className="font-semibold text-slate-700">Successfully Resolved</span>
+              <span className="font-semibold text-slate-700">{t('result.success')}</span>
             </div>
             
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -190,7 +191,7 @@ export const Resolver: React.FC = () => {
                     rel="noreferrer"
                     className="absolute bottom-3 right-3 z-20 bg-black/70 hover:bg-black/90 text-white text-xs px-2 py-1 rounded backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    View Original
+                    {t('result.viewOriginal')}
                   </a>
                 </div>
               </div>
@@ -198,14 +199,14 @@ export const Resolver: React.FC = () => {
               {/* Right: Actions & Info */}
               <div className="space-y-6 flex flex-col justify-center">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Trace ID</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('result.traceId')}</label>
                   <div className="font-mono text-xs bg-slate-100 p-2 rounded border border-slate-200 text-slate-600 break-all">
                     {result.traceId}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">HD URL</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('result.hdUrl')}</label>
                   <div className="relative">
                     <div className="font-mono text-xs bg-slate-50 p-3 pr-10 rounded-lg border border-slate-200 text-slate-700 break-all max-h-24 overflow-y-auto custom-scrollbar">
                       {result.hdUrl}
@@ -220,14 +221,14 @@ export const Resolver: React.FC = () => {
                     onClick={copyToClipboard}
                     icon={copied ? CheckCircle2 : Copy}
                   >
-                    {copied ? 'Copied' : 'Copy Link'}
+                    {copied ? t('result.copied') : t('result.copyLink')}
                   </Button>
                   <Button 
                     className="flex-1 shadow-md shadow-red-100"
                     onClick={() => triggerDownload(result.hdUrl, `xhs_${result.traceId}`)}
                     icon={Download}
                   >
-                    Download
+                    {t('result.download')}
                   </Button>
                 </div>
               </div>
@@ -242,13 +243,13 @@ export const Resolver: React.FC = () => {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
               <History className="h-5 w-5 text-slate-400" />
-              Recent History
+              {t('history.title')}
             </h2>
             <button 
                onClick={() => setHistory([])}
                className="text-xs text-red-500 hover:text-red-700 flex items-center gap-1"
             >
-              <Trash2 className="h-3 w-3" /> Clear
+              <Trash2 className="h-3 w-3" /> {t('history.clear')}
             </button>
           </div>
           <div className="grid grid-cols-1 gap-3">
@@ -279,8 +280,8 @@ export const Resolver: React.FC = () => {
       
       {/* Footer */}
       <div className="text-center text-slate-400 text-xs py-8">
-        <p>Disclaimer: This tool is for educational purposes only.</p>
-        <p className="mt-1">Compatible with mobile and desktop browsers.</p>
+        <p>{t('app.disclaimer')}</p>
+        <p className="mt-1">{t('app.compatibility')}</p>
       </div>
 
     </div>

@@ -1,0 +1,34 @@
+{
+  "app": {
+    "title": "小红书高清解析",
+    "subtitle": "从小红书网页链接提取高清无水印 PNG 图片。自动绕过 403 错误。",
+    "github": "GitHub",
+    "disclaimer": "免责声明：本工具仅供学习使用。",
+    "compatibility": "兼容移动端和桌面端浏览器。"
+  },
+  "input": {
+    "label": "网页图片链接",
+    "fillTestCase": "填充测试用例",
+    "placeholder": "粘贴包含 sns-webpic-qc.xhscdn.com 的链接...",
+    "autoDownload": "自动下载图片",
+    "clear": "清空",
+    "resolve": "解析",
+    "error": {
+      "empty": "请输入要解析的链接。",
+      "invalid": "未找到有效的 Trace ID（以 1040g 开头）。请检查链接。"
+    }
+  },
+  "result": {
+    "success": "解析成功",
+    "viewOriginal": "查看原图",
+    "traceId": "Trace ID",
+    "hdUrl": "高清链接",
+    "copyLink": "复制链接",
+    "copied": "已复制",
+    "download": "下载"
+  },
+  "history": {
+    "title": "最近历史",
+    "clear": "清空"
+  }
+}

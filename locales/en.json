@@ -1,0 +1,34 @@
+{
+  "app": {
+    "title": "XHS HD Resolver",
+    "subtitle": "Extract high-quality, watermark-free PNGs from Xiaohongshu web links. Bypasses 403 errors automatically.",
+    "github": "GitHub",
+    "disclaimer": "Disclaimer: This tool is for educational purposes only.",
+    "compatibility": "Compatible with mobile and desktop browsers."
+  },
+  "input": {
+    "label": "Web Picture URL",
+    "fillTestCase": "Fill Test Case",
+    "placeholder": "Paste link containing sns-webpic-qc.xhscdn.com...",
+    "autoDownload": "Auto Download Image",
+    "clear": "Clear",
+    "resolve": "Resolve",
+    "error": {
+      "empty": "Please enter a link to resolve.",
+      "invalid": "No valid Trace ID found (starting with 1040g). Please check the link."
+    }
+  },
+  "result": {
+    "success": "Successfully Resolved",
+    "viewOriginal": "View Original",
+    "traceId": "Trace ID",
+    "hdUrl": "HD URL",
+    "copyLink": "Copy Link",
+    "copied": "Copied",
+    "download": "Download"
+  },
+  "history": {
+    "title": "Recent History",
+    "clear": "Clear"
+  }
+}
